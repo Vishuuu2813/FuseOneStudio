@@ -6,6 +6,7 @@ import Cursor from './components/Cursor'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
+import ScrollToTop from './components/ScrollToTop'
 
 // Pages
 const HomePage    = lazy(() => import('./pages/HomePage'))
@@ -36,6 +37,7 @@ function AppInner() {
 
   return (
     <>
+      <ScrollToTop />
       <Cursor />
       <Navbar />
       <main>
