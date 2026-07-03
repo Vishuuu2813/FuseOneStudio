@@ -1,7 +1,6 @@
 import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { staggerContainer, fadeUp, clipWipe, viewportOnce } from '../lib/animations'
-import { useIsMobile } from '../hooks/useIsMobile'
 import anime from '../lib/anime'
 
 const steps = [
@@ -67,7 +66,7 @@ function StatCounter({ value, suffix, label }) {
         ref={ref}
         style={{
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(2.2rem, 5vw, 4rem)',
+          fontSize: 'clamp(2.5rem, 5vw, 4rem)',
           fontWeight: 800,
           color: 'var(--c-accent)',
           letterSpacing: '-0.04em',
@@ -76,26 +75,18 @@ function StatCounter({ value, suffix, label }) {
       >
         0{suffix}
       </div>
-      <p className="text-label" style={{ marginTop: '0.4rem', fontSize: '0.65rem' }}>{label}</p>
+      <p className="text-label" style={{ marginTop: '0.4rem' }}>{label}</p>
     </div>
   )
 }
 
 export default function Process() {
-  const isMobile = useIsMobile()
-
   return (
     <section id="process" className="section-pad" style={{ background: 'var(--c-base)' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
 
         {/* Header */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-          gap: isMobile ? '1.5rem' : '4rem',
-          marginBottom: isMobile ? '3.5rem' : '6rem',
-          alignItems: 'end',
-        }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '6rem', alignItems: 'end' }}>
           <div>
             <motion.span
               variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
@@ -112,9 +103,9 @@ export default function Process() {
           </div>
           <motion.p
             variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
-            className="text-body" style={{ alignSelf: 'end', fontSize: '0.92rem' }}
+            className="text-body" style={{ alignSelf: 'end' }}
           >
-            We don\'t sell you on complexity. Our process is designed to get visible
+            We don't sell you on complexity. Our process is designed to get visible
             results in weeks, not quarters.
           </motion.p>
         </div>
@@ -130,8 +121,8 @@ export default function Process() {
               viewport={viewportOnce}
               style={{
                 display: 'grid',
-                gridTemplateColumns: isMobile ? '50px 1fr' : '80px 1fr',
-                gap: isMobile ? '1rem' : '2rem',
+                gridTemplateColumns: '80px 1fr',
+                gap: '2rem',
                 padding: '2.5rem 0',
                 borderBottom: '1px solid var(--c-border)',
                 position: 'relative',
@@ -140,7 +131,7 @@ export default function Process() {
               {/* Step number — dark + visible */}
               <div style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: isMobile ? '2.5rem' : '3.5rem',
+                fontSize: '3.5rem',
                 fontWeight: 800,
                 lineHeight: 1,
                 color: 'var(--c-accent)',
@@ -151,14 +142,14 @@ export default function Process() {
                 {step.num}
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem', alignItems: 'start' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem', alignItems: 'start' }}>
                 <div>
                   <span className="text-label" style={{ color: 'var(--c-accent)', display: 'block', marginBottom: '0.5rem' }}>
                     {step.tag}
                   </span>
                   <h3 style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.25rem, 2.2vw, 1.9rem)',
+                    fontSize: 'clamp(1.4rem, 2.2vw, 1.9rem)',
                     fontWeight: 700,
                     color: 'var(--c-text)',
                     marginBottom: '0.75rem',
@@ -166,7 +157,7 @@ export default function Process() {
                   }}>
                     {step.label}
                   </h3>
-                  <p className="text-body" style={{ maxWidth: '480px', fontSize: '0.88rem' }}>{step.desc}</p>
+                  <p className="text-body" style={{ maxWidth: '480px' }}>{step.desc}</p>
                 </div>
               </div>
             </motion.div>
@@ -181,10 +172,10 @@ export default function Process() {
           viewport={viewportOnce}
           style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-            gap: '2.5rem',
-            marginTop: isMobile ? '3.5rem' : '6rem',
-            paddingTop: isMobile ? '2.5rem' : '4rem',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: '2rem',
+            marginTop: '6rem',
+            paddingTop: '4rem',
             borderTop: '1px solid var(--c-border)',
           }}
         >
