@@ -78,7 +78,7 @@ export default function FinalCTA() {
             }}>
             📅 Schedule Free Meeting →
           </motion.a>
-          <motion.a href="mailto:info@fuseone.studio"
+          <motion.a href="mailto:info@fuseonestudios.com"
             whileHover={{ borderColor: 'var(--c-accent)', color: 'var(--c-accent)' }}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: '0.5rem',

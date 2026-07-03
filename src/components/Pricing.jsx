@@ -286,7 +286,7 @@ export default function Pricing() {
         >
           All plans include a 14-day free trial. No credit card required.{' '}
           Questions?{' '}
-          <a href="mailto:info@fuseone.studio" style={{ color: 'var(--c-accent)', textDecoration: 'none', fontWeight: 500 }}>
+          <a href="mailto:info@fuseonestudios.com" style={{ color: 'var(--c-accent)', textDecoration: 'none', fontWeight: 500 }}>
             Email us →
           </a>
         </motion.p>

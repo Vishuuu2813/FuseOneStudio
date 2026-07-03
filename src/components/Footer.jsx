@@ -19,7 +19,7 @@ const company = [
   { label: 'Book a Call', href: 'https://calendly.com/fuseonestudios', external: true },
 ]
 const contact = [
-  { label: 'info@fuseone.studio', href: 'mailto:info@fuseone.studio', icon: '✉' },
+  { label: 'info@fuseonestudios.com', href: 'mailto:info@fuseonestudios.com', icon: '✉' },
   { label: 'Instagram', href: 'https://instagram.com/fuseonestudios', icon: '↗' },
   { label: 'X (Twitter)', href: 'https://x.com/FuseOneStudio', icon: '↗' },
   { label: 'LinkedIn', href: 'https://linkedin.com/company/fuseone', icon: '↗' },
@@ -74,7 +74,7 @@ export default function Footer() {
               }}>
               Schedule a Free Meeting →
             </motion.a>
-            <a href="mailto:info@fuseone.studio" style={{ fontSize: '0.78rem', color: 'rgba(167,139,250,0.6)', textDecoration: 'none' }}>
+            <a href="mailto:info@fuseonestudios.com" style={{ fontSize: '0.78rem', color: 'rgba(167,139,250,0.6)', textDecoration: 'none' }}>
               or email us directly ↗
             </a>
           </div>
@@ -173,8 +173,8 @@ export default function Footer() {
             <a key={t} href="#" style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.2)', textDecoration: 'none' }}>{t}</a>
           ))}
         </div>
-        <a href="https://fuseone.studio" style={{ fontSize: '0.7rem', color: 'rgba(167,139,250,0.3)', textDecoration: 'none' }}>
-          fuseone.studio ↗
+        <a href="https://fuseonestudios.com" style={{ fontSize: '0.78rem', color: 'rgba(167,139,250,0.3)', textDecoration: 'none' }}>
+          fuseonestudios.com ↗
         </a>
       </div>
     </footer>
