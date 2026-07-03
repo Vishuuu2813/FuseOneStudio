@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { fadeUp, staggerContainer, viewportOnce } from '../lib/animations'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const team = [
   {
@@ -24,22 +25,23 @@ const team = [
   },
 ]
 
-function TeamCard({ member, index }) {
+function TeamCard({ member, index, isMobile }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-      whileHover={{ y: -8 }}
+      whileHover={isMobile ? {} : { y: -8 }}
       style={{
         background: '#fff',
         border: '1px solid rgba(109,40,217,0.1)',
         borderRadius: '24px',
-        padding: '2.5rem',
+        padding: isMobile ? '1.75rem' : '2.5rem',
         boxShadow: '0 4px 32px rgba(109,40,217,0.06), 0 1px 3px rgba(0,0,0,0.05)',
-        flex: 1,
-        minWidth: '300px',
+        flex: isMobile ? 'none' : '1',
+        width: isMobile ? '100%' : 'auto',
+        minWidth: isMobile ? '100%' : '300px',
         maxWidth: '440px',
         transition: 'box-shadow 0.35s ease',
         cursor: 'pointer',
@@ -47,17 +49,17 @@ function TeamCard({ member, index }) {
       onClick={() => window.open(member.linkedin, '_blank')}
     >
       {/* Avatar */}
-      <div style={{ marginBottom: '1.75rem' }}>
+      <div style={{ marginBottom: '1.5rem' }}>
         <div style={{
-          width: 72,
-          height: 72,
+          width: 64,
+          height: 64,
           borderRadius: '50%',
           background: member.color,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           fontFamily: 'var(--font-display)',
-          fontSize: '1.5rem',
+          fontSize: '1.35rem',
           fontWeight: 800,
           color: '#fff',
           letterSpacing: '-0.02em',
@@ -76,7 +78,7 @@ function TeamCard({ member, index }) {
         borderRadius: '100px',
         fontSize: '0.65rem',
         fontWeight: 600,
-        letterSpacing: '0.1em',
+        letterSpacing: '0.15em',
         textTransform: 'uppercase',
         color: 'var(--c-accent)',
         marginBottom: '0.75rem',
@@ -87,7 +89,7 @@ function TeamCard({ member, index }) {
       {/* Name */}
       <h3 style={{
         fontFamily: 'var(--font-display)',
-        fontSize: '1.5rem',
+        fontSize: '1.35rem',
         fontWeight: 700,
         color: 'var(--c-text)',
         letterSpacing: '-0.025em',
@@ -107,8 +109,8 @@ function TeamCard({ member, index }) {
 
       {/* Bio */}
       <p style={{
-        fontSize: '0.9rem',
-        lineHeight: 1.7,
+        fontSize: '0.88rem',
+        lineHeight: 1.65,
         color: 'var(--c-muted)',
         marginBottom: '1.5rem',
       }}>
@@ -149,6 +151,8 @@ function TeamCard({ member, index }) {
 }
 
 export default function Team() {
+  const isMobile = useIsMobile()
+
   return (
     <section
       id="team"
@@ -157,7 +161,7 @@ export default function Team() {
     >
       <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <motion.span
             variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
             className="text-eyebrow"
@@ -189,9 +193,15 @@ export default function Team() {
         </div>
 
         {/* Cards */}
-        <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: '1.25rem',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
           {team.map((member, i) => (
-            <TeamCard key={member.name} member={member} index={i} />
+            <TeamCard key={member.name} member={member} index={i} isMobile={isMobile} />
           ))}
         </div>
 
@@ -202,9 +212,9 @@ export default function Team() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
           style={{
-            marginTop: '3.5rem',
+            marginTop: isMobile ? '2.5rem' : '3.5rem',
             textAlign: 'center',
-            padding: '2.5rem',
+            padding: isMobile ? '1.75rem' : '2.5rem',
             background: '#fff',
             border: '1px solid rgba(109,40,217,0.1)',
             borderRadius: '20px',
@@ -223,7 +233,7 @@ export default function Team() {
           }}>
             "We know your problems. We know your target audience and how you can grow rapidly with the help of automation."
           </p>
-          <span style={{ fontSize: '0.75rem', color: 'var(--c-accent)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.72rem', color: 'var(--c-accent)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
             — Apoorv Sharma, Founder at FuseOne
           </span>
         </motion.blockquote>

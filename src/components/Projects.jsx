@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { fadeUp, viewportOnce } from '../lib/animations'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const projects = [
   {
@@ -49,10 +50,10 @@ const projects = [
   },
 ]
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, isMobile }) {
   return (
     <motion.div
-      whileHover={{ y: -6 }}
+      whileHover={isMobile ? {} : { y: -6 }}
       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: 'relative',
@@ -60,12 +61,13 @@ function ProjectCard({ project }) {
         borderRadius: '20px',
         overflow: 'hidden',
         flexShrink: 0,
-        width: 'clamp(320px, 32vw, 420px)',
-        height: '520px',
+        width: isMobile ? '100%' : 'clamp(320px, 32vw, 420px)',
+        height: isMobile ? 'auto' : '520px',
+        minHeight: isMobile ? '360px' : 'none',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
-        padding: '2.5rem',
+        padding: isMobile ? '1.75rem' : '2.5rem',
         border: '1px solid rgba(255,255,255,0.07)',
         boxShadow: '0 24px 60px rgba(0,0,0,0.25)',
       }}
@@ -75,7 +77,7 @@ function ProjectCard({ project }) {
         position: 'absolute',
         top: '5%', right: '-2%',
         fontFamily: 'var(--font-display)',
-        fontSize: 'clamp(6rem, 14vw, 10rem)',
+        fontSize: isMobile ? 'clamp(5rem, 12vw, 7rem)' : 'clamp(6rem, 14vw, 10rem)',
         fontWeight: 900,
         color: 'rgba(255,255,255,0.06)',
         lineHeight: 1,
@@ -86,7 +88,7 @@ function ProjectCard({ project }) {
       </div>
 
       {/* Tag + year */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: isMobile ? '2.5rem' : 'auto' }}>
         <span style={{
           fontSize: '0.65rem', fontWeight: 600,
           letterSpacing: '0.14em', textTransform: 'uppercase',
@@ -103,7 +105,7 @@ function ProjectCard({ project }) {
       <div>
         <h3 style={{
           fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(1.4rem, 2vw, 1.85rem)',
+          fontSize: 'clamp(1.3rem, 2vw, 1.85rem)',
           fontWeight: 700,
           color: '#F0EEFF',
           letterSpacing: '-0.025em',
@@ -113,22 +115,22 @@ function ProjectCard({ project }) {
           {project.title}
         </h3>
         <p style={{
-          fontSize: '0.85rem',
-          lineHeight: 1.65,
+          fontSize: '0.82rem',
+          lineHeight: 1.6,
           color: 'rgba(255,255,255,0.5)',
           marginBottom: '1.5rem',
         }}>
           {project.desc}
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-          <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: '0.65rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
             {project.client}
           </span>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, color: '#A78BFA', letterSpacing: '-0.03em' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', fontWeight: 800, color: '#A78BFA', letterSpacing: '-0.03em' }}>
               {project.metric}
             </div>
-            <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div style={{ fontSize: '0.55rem', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               {project.metricLabel}
             </div>
           </div>
@@ -139,13 +141,55 @@ function ProjectCard({ project }) {
 }
 
 export default function Projects() {
+  const isMobile = useIsMobile()
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ['start start', 'end end'],
   })
-  // Map scroll progress → horizontal translate of cards
+  // Map scroll progress → horizontal translate of cards (desktop only)
   const x = useTransform(scrollYProgress, [0, 1], ['0%', '-55%'])
+
+  if (isMobile) {
+    return (
+      <section
+        id="work"
+        className="section-pad"
+        style={{
+          background: 'var(--c-base)',
+          borderTop: '1px solid var(--c-border)',
+        }}
+      >
+        {/* Header */}
+        <div style={{ marginBottom: '2rem' }}>
+          <span style={{
+            display: 'block', marginBottom: '0.5rem',
+            fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.14em',
+            textTransform: 'uppercase', color: 'var(--c-accent)',
+          }}>
+            Case Studies
+          </span>
+          <h2 style={{
+            fontFamily: 'var(--font-display)',
+            fontSize: '1.8rem',
+            fontWeight: 800,
+            color: 'var(--c-text)',
+            letterSpacing: '-0.025em',
+            lineHeight: 1.15,
+          }}>
+            Work that moves <em style={{ color: 'var(--c-accent)', fontStyle: 'italic' }}>numbers</em>
+          </h2>
+        </div>
+
+        {/* Vertical list of beautiful cards on mobile */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} isMobile={true} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section
@@ -210,7 +254,7 @@ export default function Projects() {
           }}
         >
           {projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} isMobile={false} />
           ))}
         </motion.div>
       </div>
