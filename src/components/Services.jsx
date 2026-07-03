@@ -137,18 +137,37 @@ export default function Services() {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               >
-                {/* Visual symbol */}
-                <div style={{
-                  fontSize: '4rem',
-                  color: 'var(--c-accent)',
-                  opacity: 0.15,
-                  fontFamily: 'monospace',
-                  lineHeight: 1,
-                  marginBottom: '1.5rem',
-                  userSelect: 'none',
-                }}>
+                {/* Visual symbol with premium micro-interactions */}
+                <motion.div
+                  animate={
+                    active === 'automation'
+                      ? { rotate: 360 }
+                      : active === 'saas'
+                      ? { scale: [1, 1.12, 1], rotate: [0, 90, 180, 270, 360] }
+                      : active === 'ai'
+                      ? { scale: [0.95, 1.1, 0.95], opacity: [0.12, 0.25, 0.12] }
+                      : active === 'data'
+                      ? { y: [0, -6, 0] }
+                      : { scale: [1, 1.08, 1] }
+                  }
+                  transition={{
+                    duration: active === 'automation' ? 12 : active === 'saas' ? 8 : 4,
+                    repeat: Infinity,
+                    ease: active === 'automation' ? 'linear' : 'easeInOut',
+                  }}
+                  style={{
+                    fontSize: '4rem',
+                    color: 'var(--c-accent)',
+                    opacity: 0.15,
+                    fontFamily: 'monospace',
+                    lineHeight: 1,
+                    marginBottom: '1.5rem',
+                    userSelect: 'none',
+                    display: 'inline-block',
+                  }}
+                >
                   {visualAnimations[active]}
-                </div>
+                </motion.div>
 
                 <h3 style={{
                   fontFamily: 'var(--font-display)',
