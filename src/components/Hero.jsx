@@ -32,7 +32,7 @@ export default function Hero() {
         display: 'flex',
         alignItems: 'center',
         overflow: 'hidden',
-        paddingTop: '64px',
+        paddingTop: '72px',
       }}
     >
       {/* Subtle 3D scene — very dim on light bg */}

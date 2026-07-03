@@ -111,7 +111,7 @@ export default function Services() {
                 <h3 style={{
                   fontFamily: 'var(--font-body)',
                   fontSize: '1rem',
-                  fontWeight: active === service.id ? 500 : 300,
+                  fontWeight: active === service.id ? 700 : 500,
                   color: active === service.id ? 'var(--c-text)' : 'var(--c-muted)',
                   marginBottom: '0.25rem',
                   transition: 'color 0.3s ease, font-weight 0.3s ease',
@@ -137,12 +137,12 @@ export default function Services() {
               >
                 {/* Visual symbol */}
                 <div style={{
-                  fontSize: '6rem',
-                  color: 'transparent',
-                  WebkitTextStroke: '1px rgba(134,59,255,0.3)',
+                  fontSize: '4rem',
+                  color: 'var(--c-accent)',
+                  opacity: 0.15,
                   fontFamily: 'monospace',
                   lineHeight: 1,
-                  marginBottom: '2rem',
+                  marginBottom: '1.5rem',
                   userSelect: 'none',
                 }}>
                   {visualAnimations[active]}
@@ -150,11 +150,11 @@ export default function Services() {
 
                 <h3 style={{
                   fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(1.8rem, 3vw, 2.5rem)',
-                  fontWeight: 300,
+                  fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                  fontWeight: 700,
                   color: 'var(--c-text)',
                   marginBottom: '1rem',
-                  letterSpacing: '-0.02em',
+                  letterSpacing: '-0.025em',
                 }}>
                   {activeService.title}
                 </h3>

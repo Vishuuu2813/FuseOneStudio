@@ -37,7 +37,10 @@ export default function Preloader({ onComplete }) {
 
   useEffect(() => {
     if (phase === 'out') {
-      const t2 = setTimeout(() => onComplete?.(), 900)
+      const t2 = setTimeout(() => {
+        onComplete?.()
+        setPhase('done') // ← unmounts the preloader via AnimatePresence
+      }, 800)
       return () => clearTimeout(t2)
     }
   }, [phase, onComplete])
@@ -84,7 +87,7 @@ export default function Preloader({ onComplete }) {
                 ? { opacity: 0, y: -12, scale: 1.05, filter: 'blur(4px)', transition: { duration: 0.4, ease: [0.76, 0, 0.24, 1] } }
                 : { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } }
             }
-            style={{ width: 64, height: 64, objectFit: 'contain' }}
+            style={{ width: 90, height: 90, objectFit: 'contain' }}
           />
 
           {/* Animated wordmark */}
