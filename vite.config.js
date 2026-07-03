@@ -15,4 +15,11 @@ export default defineConfig({
   optimizeDeps: {
     include: ['animejs/lib/anime.min.js'],
   },
+  // SPA routing: all routes fallback to index.html
+  server: {
+    historyApiFallback: true,
+  },
+  preview: {
+    historyApiFallback: true,
+  },
 })

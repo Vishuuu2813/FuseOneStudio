@@ -1,84 +1,73 @@
 import { lazy, Suspense, useState } from 'react'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { useLenis } from './hooks/useLenis'
 import Cursor from './components/Cursor'
 import Preloader from './components/Preloader'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
+import Footer from './components/Footer'
 
-const LogoStrip = lazy(() => import('./components/LogoStrip'))
-const Process = lazy(() => import('./components/Process'))
-const Projects = lazy(() => import('./components/Projects'))
-const Services = lazy(() => import('./components/Services'))
-const Team = lazy(() => import('./components/Team'))
-const Testimonials = lazy(() => import('./components/Testimonials'))
-const Comparison = lazy(() => import('./components/Comparison'))
-const Pricing = lazy(() => import('./components/Pricing'))
-const FinalCTA = lazy(() => import('./components/FinalCTA'))
-const Footer = lazy(() => import('./components/Footer'))
+// Pages
+const HomePage    = lazy(() => import('./pages/HomePage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const WorkPage    = lazy(() => import('./pages/WorkPage'))
+const PricingPage = lazy(() => import('./pages/PricingPage'))
+const TeamPage    = lazy(() => import('./pages/TeamPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const CollabPage  = lazy(() => import('./pages/CollabPage'))
+const NotFound    = lazy(() => import('./pages/NotFound'))
 
 function SectionLoader() {
   return (
-    <div style={{
-      height: '120px',
-      display: 'flex', alignItems: 'center', justifyContent: 'center',
-    }}>
+    <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{
-        width: '1px', height: '36px',
+        width: '1px', height: '60px',
         background: 'linear-gradient(to bottom, var(--c-accent), transparent)',
+        opacity: 0.5,
         animation: 'none',
-        opacity: 0.4,
       }} />
     </div>
   )
 }
 
-export default function App() {
-  const [preloaderDone, setPreloaderDone] = useState(false)
+function AppInner() {
+  const location = useLocation()
   useLenis()
 
   return (
     <>
       <Cursor />
-      <Preloader onComplete={() => setPreloaderDone(true)} />
-
-      {preloaderDone && (
-        <>
-          <Navbar />
-          <main>
-            <Hero />
-            <Suspense fallback={<SectionLoader />}>
-              <LogoStrip />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Process />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Projects />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Services />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Team />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Testimonials />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Comparison />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Pricing />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <FinalCTA />
-            </Suspense>
-            <Suspense fallback={<SectionLoader />}>
-              <Footer />
-            </Suspense>
-          </main>
-        </>
-      )}
+      <Navbar />
+      <main>
+        <AnimatePresence mode="wait">
+          <Suspense fallback={<SectionLoader />}>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/"          element={<HomePage />} />
+              <Route path="/services"  element={<ServicesPage />} />
+              <Route path="/work"      element={<WorkPage />} />
+              <Route path="/pricing"   element={<PricingPage />} />
+              <Route path="/team"      element={<TeamPage />} />
+              <Route path="/contact"   element={<ContactPage />} />
+              <Route path="/collab"    element={<CollabPage />} />
+              <Route path="*"          element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </AnimatePresence>
+      </main>
+      <Suspense fallback={null}>
+        <Footer />
+      </Suspense>
     </>
+  )
+}
+
+export default function App() {
+  const [preloaderDone, setPreloaderDone] = useState(false)
+
+  return (
+    <BrowserRouter>
+      <Preloader onComplete={() => setPreloaderDone(true)} />
+      {preloaderDone && <AppInner />}
+    </BrowserRouter>
   )
 }
