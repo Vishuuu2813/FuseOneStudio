@@ -67,9 +67,9 @@ function StatCounter({ value, suffix, label }) {
         style={{
           fontFamily: 'var(--font-display)',
           fontSize: 'clamp(2.5rem, 5vw, 4rem)',
-          fontWeight: 300,
-          color: 'var(--c-text)',
-          letterSpacing: '-0.03em',
+          fontWeight: 800,
+          color: 'var(--c-accent)',
+          letterSpacing: '-0.04em',
           lineHeight: 1,
         }}
       >
@@ -128,15 +128,16 @@ export default function Process() {
                 position: 'relative',
               }}
             >
-              {/* Outline number */}
+              {/* Step number — dark + visible */}
               <div style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: '4rem',
-                fontWeight: 700,
+                fontSize: '3.5rem',
+                fontWeight: 800,
                 lineHeight: 1,
-                color: 'transparent',
-                WebkitTextStroke: '1px rgba(134,59,255,0.25)',
+                color: 'var(--c-accent)',
+                opacity: 0.22,
                 userSelect: 'none',
+                letterSpacing: '-0.04em',
               }}>
                 {step.num}
               </div>
@@ -148,11 +149,11 @@ export default function Process() {
                   </span>
                   <h3 style={{
                     fontFamily: 'var(--font-display)',
-                    fontSize: 'clamp(1.5rem, 2.5vw, 2rem)',
-                    fontWeight: 300,
+                    fontSize: 'clamp(1.4rem, 2.2vw, 1.9rem)',
+                    fontWeight: 700,
                     color: 'var(--c-text)',
                     marginBottom: '0.75rem',
-                    letterSpacing: '-0.02em',
+                    letterSpacing: '-0.025em',
                   }}>
                     {step.label}
                   </h3>

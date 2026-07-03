@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { fadeUp, staggerContainer, viewportOnce } from '../lib/animations'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { fadeUp, viewportOnce } from '../lib/animations'
 
 const projects = [
   {
@@ -10,9 +10,9 @@ const projects = [
     metric: '70%',
     metricLabel: 'Reduction in manual tasks',
     desc: 'End-to-end CRM automation with AI-powered lead scoring, automated follow-up sequences, and real-time deal health monitoring.',
-    color: '#1A1A1D',
-    accentColor: '#863bff',
-    category: 'Automation',
+    tag: 'Automation',
+    year: '2025',
+    gradient: 'linear-gradient(135deg, #1a0533 0%, #2d0f5e 100%)',
   },
   {
     id: 'healthcare',
@@ -21,181 +21,199 @@ const projects = [
     metric: '55%',
     metricLabel: 'Faster intake processing',
     desc: 'Patient intake forms, insurance verification, and appointment scheduling fully automated — 38% reduction in admin overhead.',
-    color: '#131315',
-    accentColor: '#863bff',
-    category: 'Healthcare',
+    tag: 'Healthcare',
+    year: '2024',
+    gradient: 'linear-gradient(135deg, #0a1628 0%, #1a2d5a 100%)',
   },
   {
     id: 'ecommerce',
     title: 'E-Commerce Product Tagging',
     client: 'Retail Brand',
     metric: '92%',
-    metricLabel: 'Tagging accuracy (AI-powered)',
-    desc: 'Computer vision + LLM pipeline that auto-tags 10,000+ SKUs daily with 92% accuracy. Manual review time down 80%, revenue attribution improved 30%.',
-    color: '#1A1A1D',
-    accentColor: '#863bff',
-    category: 'AI / ML',
+    metricLabel: 'AI tagging accuracy',
+    desc: 'Computer vision + LLM pipeline that auto-tags 10,000+ SKUs daily. Manual review time down 80%, revenue attribution improved 30%.',
+    tag: 'AI / ML',
+    year: '2024',
+    gradient: 'linear-gradient(135deg, #1a0a2e 0%, #3d1a6e 100%)',
+  },
+  {
+    id: 'chatbot',
+    title: 'AI Customer Support Bot',
+    client: 'E-commerce Brand',
+    metric: '24/7',
+    metricLabel: 'Autonomous support',
+    desc: 'GPT-powered support agent trained on product knowledge base — resolves 78% of tickets without human escalation.',
+    tag: 'Chatbots',
+    year: '2025',
+    gradient: 'linear-gradient(135deg, #0d1a0a 0%, #1a3d1a 100%)',
   },
 ]
 
-function ProjectCard({ project, index }) {
-  const [hovered, setHovered] = useState(false)
-
+function ProjectCard({ project }) {
   return (
     <motion.div
-      layoutId={`project-${project.id}`}
-      variants={fadeUp}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: 'relative',
-        background: project.color,
-        border: '1px solid var(--c-border)',
+        background: project.gradient,
+        borderRadius: '20px',
         overflow: 'hidden',
         flexShrink: 0,
-        width: 'clamp(340px, 36vw, 480px)',
-        minHeight: '500px',
+        width: 'clamp(320px, 32vw, 420px)',
+        height: '520px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
         padding: '2.5rem',
+        border: '1px solid rgba(255,255,255,0.07)',
+        boxShadow: '0 24px 60px rgba(0,0,0,0.25)',
       }}
     >
-      {/* Huge metric as background text */}
-      <motion.div
-        animate={{ opacity: hovered ? 0.06 : 0.04, scale: hovered ? 1.05 : 1 }}
-        transition={{ duration: 0.5 }}
-        style={{
-          position: 'absolute',
-          top: '10%',
-          right: '-5%',
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(8rem, 18vw, 14rem)',
-          fontWeight: 700,
-          color: 'var(--c-accent)',
-          lineHeight: 1,
-          pointerEvents: 'none',
-          userSelect: 'none',
-          WebkitTextStroke: '1px var(--c-accent)',
-        }}
-      >
+      {/* Giant metric watermark */}
+      <div style={{
+        position: 'absolute',
+        top: '5%', right: '-2%',
+        fontFamily: 'var(--font-display)',
+        fontSize: 'clamp(6rem, 14vw, 10rem)',
+        fontWeight: 900,
+        color: 'rgba(255,255,255,0.06)',
+        lineHeight: 1,
+        userSelect: 'none',
+        letterSpacing: '-0.04em',
+      }}>
         {project.metric}
-      </motion.div>
-
-      {/* Category tag */}
-      <span className="text-eyebrow" style={{ marginBottom: '1.5rem', display: 'block' }}>
-        {project.category}
-      </span>
-
-      {/* Title */}
-      <h3
-        style={{
-          fontFamily: 'var(--font-display)',
-          fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
-          fontWeight: 300,
-          color: 'var(--c-text)',
-          marginBottom: '0.75rem',
-          letterSpacing: '-0.02em',
-          lineHeight: 1.1,
-        }}
-      >
-        {project.title}
-      </h3>
-
-      {/* Sliding desc on hover */}
-      <AnimatePresence>
-        {hovered && (
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="text-body"
-            style={{ marginBottom: '1.25rem' }}
-          >
-            {project.desc}
-          </motion.p>
-        )}
-      </AnimatePresence>
-
-      {/* Client + metric */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-        <span className="text-label">{project.client}</span>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ color: 'var(--c-accent)', fontSize: '1.5rem', fontFamily: 'var(--font-display)', fontWeight: 300 }}>
-            {project.metric}
-          </div>
-          <span className="text-label" style={{ fontSize: '0.65rem' }}>{project.metricLabel}</span>
-        </div>
       </div>
 
-      {/* Gold overlay on hover */}
-      <motion.div
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(135deg, rgba(134,59,255,0.06) 0%, transparent 60%)',
-          pointerEvents: 'none',
-        }}
-      />
+      {/* Tag + year */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 'auto' }}>
+        <span style={{
+          fontSize: '0.65rem', fontWeight: 600,
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+          color: '#A78BFA', paddingTop: '0.25rem',
+        }}>
+          {project.tag}
+        </span>
+        <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', fontWeight: 500 }}>
+          {project.year}
+        </span>
+      </div>
+
+      {/* Content */}
+      <div>
+        <h3 style={{
+          fontFamily: 'var(--font-display)',
+          fontSize: 'clamp(1.4rem, 2vw, 1.85rem)',
+          fontWeight: 700,
+          color: '#F0EEFF',
+          letterSpacing: '-0.025em',
+          lineHeight: 1.15,
+          marginBottom: '0.75rem',
+        }}>
+          {project.title}
+        </h3>
+        <p style={{
+          fontSize: '0.85rem',
+          lineHeight: 1.65,
+          color: 'rgba(255,255,255,0.5)',
+          marginBottom: '1.5rem',
+        }}>
+          {project.desc}
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
+          <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.35)', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            {project.client}
+          </span>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.6rem', fontWeight: 800, color: '#A78BFA', letterSpacing: '-0.03em' }}>
+              {project.metric}
+            </div>
+            <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              {project.metricLabel}
+            </div>
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }
 
 export default function Projects() {
-  return (
-    <section id="work" style={{ padding: 'clamp(5rem,10vw,9rem) 0', background: 'var(--c-surface)', overflow: 'hidden' }}>
-      <div style={{ padding: '0 clamp(1.5rem, 6vw, 6rem)', marginBottom: '3rem' }}>
-        <motion.span
-          variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
-          className="text-eyebrow" style={{ display: 'block', marginBottom: '1rem' }}
-        >
-          Case Studies
-        </motion.span>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
-          <motion.h2
-            variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
-            className="text-headline"
-          >
-            Work that moves <em style={{ color: 'var(--c-accent)' }}>numbers</em>
-          </motion.h2>
-          <motion.a
-            variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
-            href="#contact"
-            className="text-label"
-            style={{ color: 'var(--c-accent)', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-            whileHover={{ gap: '0.8rem' }}
-          >
-            All projects <span>→</span>
-          </motion.a>
-        </div>
-      </div>
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  })
+  // Map scroll progress → horizontal translate of cards
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-55%'])
 
-      {/* Horizontal scroll gallery */}
-      <motion.div
-        variants={staggerContainer(0.12)}
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportOnce}
-        style={{
-          display: 'flex',
-          gap: '1.5rem',
-          paddingLeft: 'clamp(1.5rem, 6vw, 6rem)',
-          paddingRight: 'clamp(1.5rem, 6vw, 6rem)',
-          overflowX: 'auto',
-          scrollSnapType: 'x mandatory',
-          scrollbarWidth: 'none',
-          paddingBottom: '1rem',
-        }}
-      >
-        {projects.map((project, i) => (
-          <div key={project.id} style={{ scrollSnapAlign: 'start' }}>
-            <ProjectCard project={project} index={i} />
+  return (
+    <section
+      ref={sectionRef}
+      id="work"
+      style={{
+        position: 'relative',
+        height: `${projects.length * 60}vh`,
+        background: 'var(--c-base)',
+      }}
+    >
+      {/* Sticky container */}
+      <div style={{
+        position: 'sticky',
+        top: 0,
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        overflow: 'hidden',
+      }}>
+        {/* Header */}
+        <div style={{ padding: '0 clamp(1.25rem, 5vw, 5rem)', marginBottom: '2.5rem' }}>
+          <motion.span
+            variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
+            style={{
+              display: 'block', marginBottom: '0.75rem',
+              fontSize: '0.68rem', fontWeight: 600, letterSpacing: '0.14em',
+              textTransform: 'uppercase', color: 'var(--c-accent)',
+            }}
+          >
+            Case Studies
+          </motion.span>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}>
+            <motion.h2
+              variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(1.8rem, 3.5vw, 2.8rem)',
+                fontWeight: 700,
+                color: 'var(--c-text)',
+                letterSpacing: '-0.025em',
+                lineHeight: 1.1,
+              }}
+            >
+              Work that moves <em style={{ color: 'var(--c-accent)', fontStyle: 'italic' }}>numbers</em>
+            </motion.h2>
+            <span style={{ fontSize: '0.75rem', color: 'var(--c-muted)' }}>
+              Scroll to explore →
+            </span>
           </div>
-        ))}
-      </motion.div>
+        </div>
+
+        {/* Horizontally scrolling cards */}
+        <motion.div
+          style={{
+            display: 'flex',
+            gap: '1.5rem',
+            paddingLeft: 'clamp(1.25rem, 5vw, 5rem)',
+            paddingRight: 'clamp(1.25rem, 5vw, 5rem)',
+            x,
+          }}
+        >
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </motion.div>
+      </div>
     </section>
   )
 }

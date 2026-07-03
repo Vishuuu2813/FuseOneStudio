@@ -71,10 +71,10 @@ export default function Cursor() {
       >
         <div
           style={{
-            width: 8,
-            height: 8,
+            width: 7,
+            height: 7,
             borderRadius: '50%',
-            background: '#F5F3EF',
+            background: 'var(--c-accent)',
             transition: 'transform 0.2s ease',
           }}
         />
@@ -88,10 +88,10 @@ export default function Cursor() {
       >
         <div
           style={{
-            width: 36,
-            height: 36,
+            width: 32,
+            height: 32,
             borderRadius: '50%',
-            border: '1px solid rgba(134,59,255,0.6)',
+            border: '1.5px solid rgba(109,40,217,0.5)',
             transition: 'opacity 0.3s ease',
           }}
         />

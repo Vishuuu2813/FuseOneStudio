@@ -17,34 +17,37 @@ const doubled = [...logos, ...logos]
 function LogoChip({ logo }) {
   return (
     <motion.div
-      whileHover={{ opacity: 1, scale: 1.05 }}
+      whileHover={{ scale: 1.05, borderColor: 'var(--c-accent)', background: 'rgba(109,40,217,0.06)' }}
       style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '0.6rem',
-        padding: '0.6rem 1.5rem',
-        border: '1px solid var(--c-border)',
-        borderRadius: '4px',
-        opacity: 0.35,
-        transition: 'opacity 0.3s ease, scale 0.3s ease',
+        gap: '0.5rem',
+        padding: '0.55rem 1.25rem',
+        border: '1px solid rgba(109,40,217,0.15)',
+        borderRadius: '8px',
+        background: '#fff',
+        boxShadow: '0 1px 4px rgba(0,0,0,0.05)',
         flexShrink: 0,
+        transition: 'all 0.2s ease',
       }}
     >
       <span style={{
         fontFamily: 'var(--font-body)',
-        fontSize: '0.65rem',
-        letterSpacing: '0.1em',
+        fontSize: '0.6rem',
+        letterSpacing: '0.08em',
         color: 'var(--c-accent)',
-        fontWeight: 600,
+        fontWeight: 700,
+        opacity: 0.7,
       }}>
         {logo.abbr}
       </span>
-      <span style={{ color: 'var(--c-text)', fontSize: '0.85rem', fontWeight: 300 }}>
+      <span style={{ color: 'var(--c-text-2)', fontSize: '0.88rem', fontWeight: 600 }}>
         {logo.name}
       </span>
     </motion.div>
   )
 }
+
 
 export default function LogoStrip() {
   return (
