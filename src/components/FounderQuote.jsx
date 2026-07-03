@@ -119,7 +119,7 @@ export default function FounderQuote() {
                 "{member.quote}"
               </p>
               <p style={{ color: 'var(--c-text)', fontSize: '0.85rem', fontWeight: 500 }}>{member.name}</p>
-              <p className="text-label" style={{ marginTop: '0.2rem' }}>{member.role}</p>
+              <p className="text-label" style={{ marginTop: '0.2rem' }}>{member.title || member.role.replace('Co-Founder & ', '')}</p>
             </motion.div>
           ))}
         </motion.div>

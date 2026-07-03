@@ -22,6 +22,16 @@ const team = [
     initials: 'RS',
     color: 'linear-gradient(135deg, #4C1D95, #6D28D9)',
   },
+  {
+    name: 'Vishwas Saxena',
+    role: 'Tech Engineer',
+    title: 'SaaS & ERP Specialist',
+    bio: 'Develops full-scale SaaS, ERP, LMS, and CRM platforms — all with AI and automation baked in from the ground up.',
+    tags: ['SaaS', 'ERP', 'LMS', 'CRM', 'Automation'],
+    linkedin: '#',
+    initials: 'VS',
+    color: 'linear-gradient(135deg, #1D4ED8, #4C1D95)',
+  },
 ]
 
 function TeamCard({ member, index }) {
@@ -181,9 +191,9 @@ export default function Team() {
           </motion.h2>
           <motion.p
             variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce}
-            style={{ fontSize: '0.95rem', color: 'var(--c-muted)', maxWidth: '440px', margin: '0 auto', lineHeight: 1.7 }}
+            style={{ fontSize: '0.95rem', color: 'var(--c-muted)', maxWidth: '480px', margin: '0 auto', lineHeight: 1.7 }}
           >
-            Two founders obsessed with shipping systems that actually work —
+            Three builders obsessed with shipping systems that actually work —
             not decks, not demos.
           </motion.p>
         </div>
@@ -224,7 +234,7 @@ export default function Team() {
             "We know your problems. We know your target audience and how you can grow rapidly with the help of automation."
           </p>
           <span style={{ fontSize: '0.75rem', color: 'var(--c-accent)', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            — Apoorv Sharma, Founder at FuseOne
+            — Apoorv Sharma, FuseOne
           </span>
         </motion.blockquote>
       </div>
