@@ -180,3 +180,22 @@ a, button, [role="button"] { cursor: none; }
   .accent-border-animated { animation: none; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
+
+/* ── Responsive Utilities ─────────────────────── */
+@media (max-width: 768px) {
+  .hidden-mobile { display: none !important; }
+  .text-display {
+    font-size: clamp(2.2rem, 10vw, 3.2rem);
+  }
+  .text-headline {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+  }
+  .section-pad {
+    padding: clamp(2.5rem, 5vw, 4rem) 1.25rem;
+  }
+}
+
+@media (min-width: 769px) {
+  .hidden-desktop { display: none !important; }
+}
+

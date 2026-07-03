@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { fadeUp, staggerContainer, viewportOnce } from '../lib/animations'
+import { useIsMobile } from '../hooks/useIsMobile'
 
 const services = [
   {
@@ -56,6 +57,7 @@ const visualAnimations = {
 export default function Services() {
   const [active, setActive] = useState(services[0].id)
   const activeService = services.find((s) => s.id === active)
+  const isMobile = useIsMobile()
 
   return (
     <section id="services" className="section-pad" style={{ background: 'var(--c-base)' }}>
@@ -73,7 +75,7 @@ export default function Services() {
           Every service, <em style={{ color: 'var(--c-accent)' }}>engineered</em>
         </motion.h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '0' : '4rem', alignItems: 'start' }}>
 
           {/* Left: Tab list */}
           <div style={{ position: 'relative' }}>
